@@ -75,9 +75,11 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'djoser',
+    'mptt',
 
     # local
     'users.apps.UsersConfig',
+    'products.apps.ProductsConfig',
 ]
 
 MIDDLEWARE = [
