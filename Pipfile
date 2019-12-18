@@ -13,6 +13,7 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
 django-environ = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.7"
