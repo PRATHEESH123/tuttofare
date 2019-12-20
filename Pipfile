@@ -15,6 +15,7 @@ django-cors-headers = "*"
 django-environ = "*"
 django-mptt = "*"
 pillow = "*"
+djangorestframework-recursive = "*"
 
 [requires]
 python_version = "3.7"

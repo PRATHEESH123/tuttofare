@@ -16,8 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# 3rd party
+from rest_framework.routers import DefaultRouter
+
+# app
+from products.views import CategoryViewSet
+
+# TODO check why only the viewset added is showing in the router
+router = DefaultRouter()
+router.register('categories', CategoryViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
     path('api/', include('djoser.urls')),
     path('api/', include('rest_framework.urls')),
 ]
