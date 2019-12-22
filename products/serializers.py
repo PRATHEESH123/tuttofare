@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
 
 # local
-from .models import Category, Product, ProductImage
+from .models import Category, Product, ProductImage, ProductReview
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -40,4 +40,19 @@ class ProductSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'images',
+        )
+
+
+class ProductReviewSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = ProductReview
+        fields = (
+            'id',
+            'user',
+            'product',
+            'text',
+            'no_of_stars',
+            'posted_on',
         )

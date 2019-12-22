@@ -5,8 +5,8 @@ from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 # local
-from .serializers import CategorySerializer, ProductSerializer
-from .models import Category, Product
+from .serializers import CategorySerializer, ProductSerializer, ProductReviewSerializer
+from .models import Category, Product, ProductReview
 
 
 class CategoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
@@ -23,3 +23,18 @@ class ProductViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     ]
     filterset_fields = ['category']
     search_fields = ['name']
+
+
+class ProductReviewViewSet(viewsets.ModelViewSet):
+    queryset = ProductReview.objects.all()
+    serializer_class = ProductReviewSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_fields = ['product']
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
