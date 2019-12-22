@@ -53,6 +53,6 @@ class ProductReviewSerializer(serializers.ModelSerializer):
             'user',
             'product',
             'text',
-            'no_of_stars',
+            'rating',
             'posted_on',
         )

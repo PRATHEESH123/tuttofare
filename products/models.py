@@ -37,7 +37,7 @@ class ProductReview(models.Model):
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='review')
     text = models.TextField()
-    no_of_stars = models.PositiveIntegerField()
+    rating = models.PositiveIntegerField()
     posted_on = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
