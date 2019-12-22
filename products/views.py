@@ -1,5 +1,6 @@
 # 3rd party
 from rest_framework import viewsets, mixins
+from rest_framework.filters import SearchFilter
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -16,5 +17,9 @@ class CategoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 class ProductViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [
+        DjangoFilterBackend,
+        SearchFilter,
+    ]
     filterset_fields = ['category']
+    search_fields = ['name']
