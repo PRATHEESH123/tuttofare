@@ -13,6 +13,10 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
 django-environ = "*"
+django-mptt = "*"
+pillow = "*"
+djangorestframework-recursive = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.7"
