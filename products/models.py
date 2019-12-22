@@ -1,6 +1,8 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
+from django.utils import timezone
+
 
 class Product(models.Model):
     """Model definition for Product."""
@@ -27,6 +29,20 @@ class ProductImage(models.Model):
     def __str__(self):
         """Unicode representation of ProductImage."""
         return f'{self.product.name}'
+
+
+class ProductReview(models.Model):
+    """Model definition for ProductReview."""
+
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='review')
+    text = models.TextField()
+    no_of_stars = models.PositiveIntegerField()
+    posted_on = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        """Unicode representation of ProductReview."""
+        return f'{self.user}: {self.text}'
 
 
 class Category(MPTTModel):

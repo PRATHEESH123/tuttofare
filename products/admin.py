@@ -4,7 +4,7 @@ from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin, TreeRelatedFieldListFilter
 
 # local
-from .models import Category, Product, ProductImage
+from .models import Category, Product, ProductImage, ProductReview
 
 
 class SubCategoryInline(admin.StackedInline):
@@ -35,10 +35,18 @@ class ProductImageInline(admin.StackedInline):
     show_change_link = True
 
 
+class ProductReviewInline(admin.StackedInline):
+    model = ProductReview
+    extra = 1
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     '''Admin View for Product'''
 
     list_display = ('name', 'price', 'descrption')
     list_filter = (('category', TreeRelatedFieldListFilter),)
-    inlines = [ProductImageInline]
+    inlines = [
+        ProductImageInline,
+        ProductReviewInline,
+    ]
