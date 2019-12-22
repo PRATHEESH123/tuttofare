@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party
+    'django_filters',
     'rest_framework',
     'djoser',
     'mptt',
