@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
 
 # local
-from .models import Category
+from .models import Category, Product, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -17,4 +17,27 @@ class CategorySerializer(serializers.ModelSerializer):
             'cover',
             'parent',
             'children',
+        )
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductImage
+        fields = (
+            'id',
+            'image',
+            'alt',
+        )
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True)
+
+    class Meta:
+        model = Product
+        fields = (
+            'id',
+            'name',
+            'images',
         )

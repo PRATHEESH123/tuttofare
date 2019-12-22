@@ -20,11 +20,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 # app
-from products.views import CategoryViewSet
+from products.views import CategoryViewSet, ProductViewSet
 
 # TODO check why only the viewset added is showing in the router
 router = DefaultRouter()
 router.register('categories', CategoryViewSet)
+router.register('products', ProductViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
