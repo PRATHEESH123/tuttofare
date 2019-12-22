@@ -1,6 +1,6 @@
 # 3rd party
 from rest_framework import viewsets, mixins
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -30,8 +30,10 @@ class ProductReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ProductReviewSerializer
     filter_backends = [
         DjangoFilterBackend,
+        OrderingFilter,
     ]
     filterset_fields = ['product']
+    ordering_fields = ['rating']
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
