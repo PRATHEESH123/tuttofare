@@ -11,6 +11,3 @@ class Collection(models.Model):
     def __str__(self):
         """Unicode representation of Collection."""
         return f'{self.name}'
-
-
-
