@@ -19,6 +19,9 @@ from django.urls import path, include
 # 3rd party
 from rest_framework.routers import DefaultRouter
 
+# djoser
+from djoser.urls.base import router as djoser_router
+
 # app
 from products.views import CategoryViewSet, ProductViewSet, ProductReviewViewSet
 
@@ -28,9 +31,11 @@ router.register('categories', CategoryViewSet)
 router.register('products', ProductViewSet)
 router.register('review', ProductReviewViewSet)
 
+router.registry.extend(djoser_router.registry)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/', include('djoser.urls')),
+    path('api/', include('djoser.urls.jwt')),
     path('api/', include('rest_framework.urls')),
 ]
