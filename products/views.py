@@ -1,7 +1,7 @@
 # 3rd party
 from rest_framework import viewsets, mixins
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -13,19 +13,19 @@ from .models import Category, Product, ProductReview, Collection
 class CollectionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Collection.objects.all()
     serializer_class = CollectionsSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class CategoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     queryset = Category.objects.filter(parent=None)
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class ProductViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     filter_backends = [
         DjangoFilterBackend,
         SearchFilter,
@@ -37,7 +37,7 @@ class ProductViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 class ProductReviewViewSet(viewsets.ModelViewSet):
     queryset = ProductReview.objects.all()
     serializer_class = ProductReviewSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     filter_backends = [
         DjangoFilterBackend,
         OrderingFilter,
