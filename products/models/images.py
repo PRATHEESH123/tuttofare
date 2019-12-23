@@ -11,3 +11,15 @@ class ProductImage(models.Model):
     def __str__(self):
         """Unicode representation of ProductImage."""
         return f'{self.product.name}'
+
+
+class CollectionImage(models.Model):
+    """Model definition for CollectionImage."""
+
+    collection = models.ForeignKey('Collection', on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField('collection Image', upload_to='collections')
+    alt = models.CharField('alt text', max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        """Unicode representation of CollectionImage."""
+        return f'Images for {self.collection.name}'

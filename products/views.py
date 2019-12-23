@@ -6,8 +6,14 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
 # local
-from .serializers import CategorySerializer, ProductSerializer, ProductReviewSerializer
-from .models import Category, Product, ProductReview
+from .serializers import CategorySerializer, ProductSerializer, ProductReviewSerializer, CollectionsSerializer
+from .models import Category, Product, ProductReview, Collection
+
+
+class CollectionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionsSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CategoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
