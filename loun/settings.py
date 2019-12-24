@@ -21,8 +21,8 @@ import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
-    CORS_ORIGIN_ALLOW_ALL=(bool, False),
-    CORS_ALLOW_CREDENTIALS=(bool, False),
+    CORS_ORIGIN_ALLOW_ALL=(bool, True),
+    CORS_ALLOW_CREDENTIALS=(bool, True),
     CORS_ORIGIN_WHITELIST=(list, []),
     ACCESS_TOKEN_LIFETIME=(
         dict(cast=dict(
@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party
+    'corsheaders',
     'django_filters',
     'rest_framework',
     'djoser',
@@ -86,6 +87,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
