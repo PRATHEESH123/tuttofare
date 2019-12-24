@@ -33,12 +33,17 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
+    rating = serializers.IntegerField(default=10)  # should start from 10
+    category = serializers.CharField()
 
     class Meta:
         model = Product
         fields = (
             'id',
             'name',
+            'price',
+            'rating',
+            'category',
             'images',
         )
 
