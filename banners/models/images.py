@@ -4,7 +4,7 @@ from django.db import models
 class BannerImage(models.Model):
     """Model definition for BannerImage."""
 
-    banner = models.ForeignKey('Banner', on_delete=models.CASCADE)
+    banner = models.ForeignKey('Banner', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField('banner image', upload_to='banner')
 
     class Meta:
