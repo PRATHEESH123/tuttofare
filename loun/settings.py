@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     # local
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
+    'banners.apps.BannersConfig',
 ]
 
 MIDDLEWARE = [
