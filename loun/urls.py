@@ -41,7 +41,7 @@ router.registry.extend(djoser_router.registry)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/', include('djoser.urls.jwt')),
+    path('api/', include('djoser.urls.authtoken')),
     path('api/', include('rest_framework.urls')),
 ]
 
