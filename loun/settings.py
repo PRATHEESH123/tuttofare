@@ -175,7 +175,11 @@ REST_FRAMEWORK = {
 # Djoser Users Auth
 # https://djoser.readthedocs.io/en/latest/settings.html
 
-DJOSER = {}
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+    }
+}
 
 # JWT Token Auth
 # https://github.com/davesque/django-rest-framework-simplejwt
