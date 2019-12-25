@@ -30,6 +30,9 @@ class ProductImageSerializer(serializers.ModelSerializer):
             'alt',
         )
 
+    def to_representation(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
+
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
