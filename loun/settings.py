@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'mptt',
+    'cuser',
 
     # local
     'users.apps.UsersConfig',

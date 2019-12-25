@@ -20,6 +20,7 @@ django-filter = "*"
 django-heroku = "*"
 gunicorn = "*"
 django-s3-storage = "*"
+django-username-email = "*"
 
 [requires]
 python_version = "3.7"
