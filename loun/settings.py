@@ -84,8 +84,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'djoser',
     'mptt',
+    'cuser',
 
     # local
     'users.apps.UsersConfig',
@@ -159,7 +161,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
@@ -173,7 +175,11 @@ REST_FRAMEWORK = {
 # Djoser Users Auth
 # https://djoser.readthedocs.io/en/latest/settings.html
 
-DJOSER = {}
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+    }
+}
 
 # JWT Token Auth
 # https://github.com/davesque/django-rest-framework-simplejwt
