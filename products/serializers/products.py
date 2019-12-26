@@ -1,5 +1,6 @@
 # django rest framework
 from rest_framework import serializers
+from rest_framework.fields import empty
 
 # local
 from ..models import Product, ProductImage
@@ -28,6 +29,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = (
             'id',
+            'url',
             'name',
             'price',
             'rating',
@@ -35,3 +37,12 @@ class ProductSerializer(serializers.ModelSerializer):
             'category',
             'images',
         )
+        detail_fields = ('descrption',)
+
+    def get_field_names(self, declared_fields, info):
+        a = super().get_field_names(declared_fields, info)
+        detail_fields = getattr(self.Meta, 'detail_fields', None)
+
+        if detail_fields is not None:
+            return a + detail_fields
+        return a
