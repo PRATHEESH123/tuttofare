@@ -9,7 +9,7 @@ class Wishlist(models.Model):
     """Model definition for Wishlist."""
 
     user = models.OneToOneField('users.User', on_delete=models.CASCADE)
-    products = models.ManyToManyField('products.Product')
+    products = models.ManyToManyField('products.Product', blank=True)
 
     def __str__(self):
         """Unicode representation of Wishlist."""
