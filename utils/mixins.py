@@ -31,14 +31,17 @@ class ProductSerializer(serializers.ModelSerializer):
 class DynamicSerializerMixin:
 
     def get_field_names(self, declared_fields, info):
-        # TODO arrest shouldn't be raised if a declared field
-        # is not used in field, but is used in detail_fields
-
-        a = super().get_field_names(declared_fields, info)
 
         view = self.context.get('view')
         detail_fields = getattr(self.Meta, 'detail_fields', tuple())
 
+        # field include in the detail_field is taken out from declared_fields
+        # before passing to super, this is so that an arrest isn't thrown when
+        # a declared field is included in detail_fields instead of fields,
+        declared_fields = set(declared_fields) - set(detail_fields)
+
+        fields = super().get_field_names(declared_fields, info)
+
         if view.action == 'retrieve':
-            return a + detail_fields
-        return a
+            return fields + detail_fields
+        return fields
