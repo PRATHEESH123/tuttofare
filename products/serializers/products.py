@@ -1,5 +1,9 @@
 # django rest framework
 from rest_framework import serializers
+from rest_framework.fields import empty
+
+# local utils
+from utils.mixins import DynamicSerializerMixin
 
 # local
 from ..models import Product, ProductImage
@@ -19,7 +23,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         return self.context['request'].build_absolute_uri(instance.image.url)
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
     rating = serializers.IntegerField(default=10)  # should start from 10
     category = serializers.CharField()
@@ -28,6 +32,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = (
             'id',
+            'url',
             'name',
             'price',
             'rating',
@@ -35,3 +40,4 @@ class ProductSerializer(serializers.ModelSerializer):
             'category',
             'images',
         )
+        detail_fields = ('descrption',)
