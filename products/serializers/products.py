@@ -31,7 +31,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'name',
             'price',
             'rating',
-            'in_stock',
+            'stock',
             'category',
             'images',
         )
