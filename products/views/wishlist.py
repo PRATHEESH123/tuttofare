@@ -10,12 +10,11 @@ from products.models import Product
 
 
 class WishlistProductsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
     def get_queryset(self):
         user = self.request.user
-        return super().get_queryset().filter(wishlist__user=user)
+        return Product.objects.filter(wishlist__user=user)
 
     @action(detail=True)
     def add(self, request, pk=None):

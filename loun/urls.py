@@ -34,7 +34,7 @@ router.register('categories', CategoryViewSet)
 router.register('products', ProductViewSet)
 router.register('review', ProductReviewViewSet)
 router.register('collections', CollectionViewSet)
-router.register('wishlist', WishlistProductsViewSet)
+router.register('wishlist', WishlistProductsViewSet, basename='wishlist')
 router.register('banners', BannerViewSet)
 
 router.registry.extend(djoser_router.registry)
