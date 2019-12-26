@@ -25,8 +25,9 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
-    rating = serializers.IntegerField(default=10)  # should start from 10
+    rating = serializers.FloatField(source='average_rating')
     category = serializers.CharField()
+    no_of_reviews = serializers.IntegerField(source='reviews.count')
 
     class Meta:
         model = Product
@@ -40,4 +41,7 @@ class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
             'category',
             'images',
         )
-        detail_fields = ('descrption',)
+        detail_fields = (
+            'descrption',
+            'no_of_reviews',
+        )

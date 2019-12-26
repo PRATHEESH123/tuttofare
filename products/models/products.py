@@ -14,3 +14,7 @@ class Product(models.Model):
     def __str__(self):
         """Unicode representation of Product."""
         return f'{self.name}'
+
+    def average_rating(self):
+        result = self.reviews.all().aggregate(rating=models.Avg('rating'))
+        return result['rating']
