@@ -2,6 +2,9 @@
 from rest_framework import serializers
 from rest_framework.fields import empty
 
+# local utils
+from utils.mixins import DynamicSerializerMixin
+
 # local
 from ..models import Product, ProductImage
 
@@ -20,7 +23,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         return self.context['request'].build_absolute_uri(instance.image.url)
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
     rating = serializers.IntegerField(default=10)  # should start from 10
     category = serializers.CharField()
@@ -37,14 +40,4 @@ class ProductSerializer(serializers.ModelSerializer):
             'category',
             'images',
         )
-        # detail_fields = ('descrption',)
-
-    def get_field_names(self, declared_fields, info):
-        a = super().get_field_names(declared_fields, info)
-
-        view = self.context.get('view')
-        detail_fields = getattr(self.Meta, 'detail_fields', tuple())
-
-        if view.action == 'retrieve':
-            return a + detail_fields
-        return a
+        detail_fields = ('descrption',)
