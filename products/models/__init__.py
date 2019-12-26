@@ -3,6 +3,7 @@ from .collections import Collection
 from .images import ProductImage, CollectionImage
 from .products import Product
 from .reviews import ProductReview
+from .wishlist import Wishlist
 
 __all__ = (
     Category,
@@ -10,4 +11,5 @@ __all__ = (
     ProductImage,
     Product,
     ProductReview,
+    Wishlist,
 )
