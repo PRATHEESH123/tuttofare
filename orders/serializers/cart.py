@@ -1,3 +1,5 @@
+from django.db.models import F
+
 from rest_framework import serializers
 
 from ..models import CartItem
@@ -39,3 +41,13 @@ class CartItemAddSerializer(serializers.ModelSerializer):
         if quantity > product.stock:
             raise serializers.ValidationError(f'only {product.stock} of {product.name} left in stock')
         return data
+
+    def create(self, validated_data):
+        quantity = validated_data.pop('quantity', None)
+        instance, created = CartItem.objects.get_or_create(**validated_data,)
+
+        if not created:
+            instance.quantity += quantity
+            instance.save()
+
+        return instance
