@@ -19,11 +19,13 @@ class WishlistProductsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     @action(detail=True)
     def add(self, request, pk=None):
         user = self.request.user
-        user.wishlist.products.add(pk)
+        product = Product.objects.get(pk=pk)
+        user.wishlist.products.add(product)
         return Response('products added')
 
     @action(detail=True)
     def remove(self, request, pk=None):
         user = self.request.user
-        user.wishlist.products.remove(pk)
+        product = Product.objects.get(pk=pk)
+        user.wishlist.products.remove(product)
         return Response('products removed')
