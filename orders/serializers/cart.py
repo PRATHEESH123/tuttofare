@@ -28,3 +28,14 @@ class CartItemAddSerializer(serializers.ModelSerializer):
             'product',
             'quantity',
         )
+
+    def validate(self, data):
+        """
+        Check if the quantity is greater than stock
+        """
+        quantity = data.get('quantity')
+        product = data.get('product')
+
+        if quantity > product.stock:
+            raise serializers.ValidationError(f'only {product.stock} of {product.name} left in stock')
+        return data
