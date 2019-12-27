@@ -35,11 +35,18 @@ class CartItemAddSerializer(serializers.ModelSerializer):
         """
         Check if the quantity is greater than stock
         """
+        user = data.get('user')
         quantity = data.get('quantity')
         product = data.get('product')
 
+        try:
+            Kart = product.cart.get(user=user)
+            quantity += Kart.quantity
+        except CartItem.DoesNotExist:
+            pass
+
         if quantity > product.stock:
-            raise serializers.ValidationError(f'only {product.stock} of {product.name} left in stock')
+            raise serializers.ValidationError(f'only {product.stock - quantity} of {product.name} left in stock')
         return data
 
     def create(self, validated_data):
