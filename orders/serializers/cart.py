@@ -4,6 +4,7 @@ from ..models import CartItem
 
 
 class CartItemSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = CartItem
