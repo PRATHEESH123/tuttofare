@@ -1,3 +1,3 @@
-from .cart import CartItemSerailizer
+from .cart import CartItemSerializer
 
-__all__ = (CartItemSerailizer,)
+__all__ = (CartItemSerializer,)
