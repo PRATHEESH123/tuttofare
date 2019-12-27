@@ -1,3 +1,6 @@
+# django
+from django.shortcuts import get_object_or_404
+
 # django rest framework
 from rest_framework import viewsets
 from rest_framework import mixins
@@ -19,11 +22,13 @@ class WishlistProductsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     @action(detail=True)
     def add(self, request, pk=None):
         user = self.request.user
-        user.wishlist.products.add(pk)
+        product = get_object_or_404(Product, pk=pk)
+        user.wishlist.products.add(product)
         return Response('products added')
 
     @action(detail=True)
     def remove(self, request, pk=None):
         user = self.request.user
-        user.wishlist.products.remove(pk)
+        product = get_object_or_404(Product, pk=pk)
+        user.wishlist.products.remove(product)
         return Response('products removed')

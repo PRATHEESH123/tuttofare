@@ -17,4 +17,4 @@ class Product(models.Model):
 
     def average_rating(self):
         result = self.reviews.all().aggregate(rating=models.Avg('rating'))
-        return result['rating']
+        return result['rating'] or 0
