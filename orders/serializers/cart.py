@@ -51,7 +51,10 @@ class CartItemAddSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         quantity = validated_data.pop('quantity', None)
-        instance, created = Cart.objects.get_or_create(**validated_data,)
+        instance, created = Cart.objects.get_or_create(
+            **validated_data,
+            defaults={'quantity': quantity},
+        )
 
         if not created:
             instance.quantity += quantity
