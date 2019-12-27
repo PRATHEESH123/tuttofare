@@ -15,22 +15,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 # 3rd party
 from rest_framework.routers import DefaultRouter
 
+# djoser
+from djoser.urls.base import router as djoser_router
+
 # app
-from products.views import CategoryViewSet, ProductViewSet, ProductReviewViewSet
+from products.views import CategoryViewSet, ProductViewSet, ProductReviewViewSet, CollectionViewSet, WishlistProductsViewSet
+from banners.views import BannerViewSet
 
 # TODO check why only the viewset added is showing in the router
 router = DefaultRouter()
 router.register('categories', CategoryViewSet)
 router.register('products', ProductViewSet)
 router.register('review', ProductReviewViewSet)
+router.register('collections', CollectionViewSet)
+router.register('wishlist', WishlistProductsViewSet, basename='wishlist')
+router.register('banners', BannerViewSet)
+
+router.registry.extend(djoser_router.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/', include('djoser.urls')),
+    path('api/', include('djoser.urls.authtoken')),
     path('api/', include('rest_framework.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

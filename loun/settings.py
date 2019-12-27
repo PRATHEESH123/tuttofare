@@ -21,8 +21,8 @@ import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
-    CORS_ORIGIN_ALLOW_ALL=(bool, False),
-    CORS_ALLOW_CREDENTIALS=(bool, False),
+    CORS_ORIGIN_ALLOW_ALL=(bool, True),
+    CORS_ALLOW_CREDENTIALS=(bool, True),
     CORS_ORIGIN_WHITELIST=(list, []),
     ACCESS_TOKEN_LIFETIME=(
         dict(cast=dict(
@@ -46,7 +46,15 @@ env = environ.Env(
             'days': 7
         },
     ),
+    AWS_ACCESS_KEY_ID=(str, ''),
+    AWS_SECRET_ACCESS_KEY=(str, ''),
+    AWS_S3_BUCKET_NAME=(str, ''),
+    AWS_REGION=(str, ''),
+    DEFAULT_FILE_STORAGE=(str, 'django.core.files.storage.FileSystemStorage'),
+    STATICFILES_STORAGE=(str, 'django.contrib.staticfiles.storage.StaticFilesStorage'),
 )
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,7 +66,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'dmi7tj+skkz0r+^n#slnezk46^p92225n2vci94*lfc7oin1vu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -73,19 +81,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party
+    'corsheaders',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'djoser',
     'mptt',
+    'cuser',
 
     # local
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
+    'banners.apps.BannersConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -148,7 +161,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
@@ -162,7 +175,11 @@ REST_FRAMEWORK = {
 # Djoser Users Auth
 # https://djoser.readthedocs.io/en/latest/settings.html
 
-DJOSER = {}
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+    }
+}
 
 # JWT Token Auth
 # https://github.com/davesque/django-rest-framework-simplejwt
@@ -206,3 +223,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/2.2/topics/files/
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_S3_BUCKET_NAME = env('AWS_S3_BUCKET_NAME')
+AWS_REGION = env('AWS_REGION')
+AWS_S3_ADDRESSING_STYLE = "virtual"
+
+DEFAULT_FILE_STORAGE = env('DEFAULT_FILE_STORAGE')
+STATICFILES_STORAGE = env('STATICFILES_STORAGE')
+
+import django_heroku
+django_heroku.settings(locals())
