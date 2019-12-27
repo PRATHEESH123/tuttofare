@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
     'banners.apps.BannersConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [

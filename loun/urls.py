@@ -27,6 +27,7 @@ from djoser.urls.base import router as djoser_router
 # app
 from products.views import CategoryViewSet, ProductViewSet, ProductReviewViewSet, CollectionViewSet, WishlistProductsViewSet
 from banners.views import BannerViewSet
+from orders.views import CartViewSet
 
 # TODO check why only the viewset added is showing in the router
 router = DefaultRouter()
@@ -35,6 +36,7 @@ router.register('products', ProductViewSet)
 router.register('review', ProductReviewViewSet)
 router.register('collections', CollectionViewSet)
 router.register('wishlist', WishlistProductsViewSet, basename='wishlist')
+router.register('cart', CartViewSet, basename='cart')
 router.register('banners', BannerViewSet)
 
 router.registry.extend(djoser_router.registry)
