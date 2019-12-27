@@ -1,14 +1,14 @@
 from django.db import models
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
 
 
 class Cart(models.Model):
-    """Model definition for Cart."""
+    """Model definition for Item."""
 
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    product = models.ForeignKey('products.Product', on_delete=models.PROTECT, related_name='cart')
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        """Unicode representation of Cart."""
-        return f'<Cart {self.user}>'
+        """Unicode representation of Item."""
+        return f'<{self.product}: {self.quantity}>'

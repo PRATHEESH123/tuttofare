@@ -2,7 +2,7 @@ from django.db.models import F
 
 from rest_framework import serializers
 
-from ..models import CartItem
+from ..models import Cart
 
 from products.serializers import ProductSerializer
 from products.models import Product
@@ -12,7 +12,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
-        model = CartItem
+        model = Cart
         fields = (
             'id',
             'product',
@@ -24,7 +24,7 @@ class CartItemAddSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
-        model = CartItem
+        model = Cart
         fields = (
             'user',
             'product',
@@ -42,7 +42,7 @@ class CartItemAddSerializer(serializers.ModelSerializer):
         try:
             Kart = product.cart.get(user=user)
             quantity += Kart.quantity
-        except CartItem.DoesNotExist:
+        except Cart.DoesNotExist:
             pass
 
         if quantity > product.stock:
@@ -51,7 +51,7 @@ class CartItemAddSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         quantity = validated_data.pop('quantity', None)
-        instance, created = CartItem.objects.get_or_create(**validated_data,)
+        instance, created = Cart.objects.get_or_create(**validated_data,)
 
         if not created:
             instance.quantity += quantity

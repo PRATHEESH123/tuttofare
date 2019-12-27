@@ -1,11 +1,11 @@
 from rest_framework import viewsets
 
-from ..models import CartItem
+from ..models import Cart
 from ..serializers import CartItemSerializer, CartItemAddSerializer
 
 
 class CartViewSet(viewsets.ModelViewSet):
-    queryset = CartItem.objects.all()
+    queryset = Cart.objects.all()
     serializer_class = CartItemSerializer
 
     def get_serializer_class(self):
