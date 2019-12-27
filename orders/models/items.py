@@ -1,10 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
-class Item(models.Model):
+class CartItem(models.Model):
     """Model definition for Item."""
 
-    cart = models.ForeignKey('Cart', on_delete=models.CASCADE, related_name='items')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     product = models.ForeignKey('products.Product', on_delete=models.PROTECT, related_name='+')
     quantity = models.PositiveIntegerField(default=1)
 

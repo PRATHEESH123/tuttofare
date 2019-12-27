@@ -12,9 +12,3 @@ class Cart(models.Model):
     def __str__(self):
         """Unicode representation of Cart."""
         return f'<Cart {self.user}>'
-
-
-@receiver(post_save, sender=get_user_model())
-def create_user_cart(sender, instance, created, **kwargs):
-    if created:
-        Cart.objects.create(user=instance)

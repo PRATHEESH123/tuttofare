@@ -1,7 +1,7 @@
 from .cart import Cart
-from .items import Item
+from .items import CartItem
 
 __all__ = (
     Cart,
-    Item,
+    CartItem,
 )

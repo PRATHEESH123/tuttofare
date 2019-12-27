@@ -1,18 +1,10 @@
 from django.contrib import admin
 
-from ..models import Cart, Item
+from ..models import CartItem
 
 
-class ItemInline(admin.TabularInline):
-    model = Item
-    extra = 1
-
-
-@admin.register(Cart)
+@admin.register(CartItem)
 class CartAdmin(admin.ModelAdmin):
     '''Admin View for Cart'''
 
     list_display = ('user',)
-    inlines = [
-        ItemInline,
-    ]
