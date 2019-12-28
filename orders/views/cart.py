@@ -14,6 +14,9 @@ class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartItemSerializer
 
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
     def get_serializer_class(self):
         if self.action == 'create':
             return CartItemAddSerializer
