@@ -22,6 +22,6 @@ class CartViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def decrement(self, request, pk):
         cart = get_object_or_404(self.get_queryset(), pk=pk)
-        cart.quantity -= 1
+        cart.quantity -= 1 if cart.quantity > 1 else 0
         cart.save()
         return Response(self.get_serializer(cart).data)
