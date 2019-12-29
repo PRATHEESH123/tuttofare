@@ -21,6 +21,8 @@ django-heroku = "*"
 gunicorn = "*"
 django-s3-storage = "*"
 django-username-email = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
 
 [requires]
 python_version = "3.7"
