@@ -31,7 +31,7 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
-    items = models.ManyToManyField('products.Product')
+    items = models.ManyToManyField('Item')
     created = models.DateTimeField(default=timezone.now, editable=False)
     fulfillment_status = models.IntegerField(
         choices=FULFILLMENT_CHOICES,
