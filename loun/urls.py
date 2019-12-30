@@ -25,7 +25,14 @@ from rest_framework.routers import DefaultRouter
 from djoser.urls.base import router as djoser_router
 
 # app
-from products.views import CategoryViewSet, ProductViewSet, ProductReviewViewSet, CollectionViewSet, WishlistProductsViewSet
+from products.views import (
+    CategoryViewSet,
+    ProductViewSet,
+    ProductReviewViewSet,
+    CollectionViewSet,
+    WishlistProductsViewSet,
+)
+
 from banners.views import BannerViewSet
 from orders.views import CartViewSet, OrderViewSet
 
