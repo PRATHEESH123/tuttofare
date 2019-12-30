@@ -9,4 +9,4 @@ class Item(models.Model):
 
     def __str__(self):
         """Unicode representation of Item."""
-        return f'<{self.product.name}>'
+        return f'<{self.product.name}: {self.quantity}>'
