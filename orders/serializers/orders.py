@@ -1,23 +1,11 @@
 # django rest framework
 from rest_framework import serializers
 
-# apps
-from products.serializers import ProductSerializer
-
 # local
-from ..models import Order, Item
+from ..models import Order
 
-
-class ItemSerializer(serializers.ModelSerializer):
-
-    product = ProductSerializer()
-
-    class Meta:
-        model = Item
-        fields = (
-            'product',
-            'quantity',
-        )
+# local serializers
+from .items import ItemSerializer  # TODO check if this is correct
 
 
 class OrderSerializer(serializers.ModelSerializer):
