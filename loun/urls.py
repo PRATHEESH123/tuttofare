@@ -46,7 +46,7 @@ router.register('wishlist', WishlistProductsViewSet, basename='wishlist')
 router.register('cart', CartViewSet, basename='cart')
 router.register('banners', BannerViewSet)
 router.register('orders', OrderViewSet, basename='orders')
-router.register('addresses', AddressViewSet, basename='orders')
+router.register('addresses', AddressViewSet, basename='addresses')
 
 router.registry.extend(djoser_router.registry)
 
