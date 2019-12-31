@@ -23,3 +23,10 @@ class CartViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             return ItemCreateSerializer
         return super().get_serializer_class()
+
+    @action(detail=True)
+    def decrement(self, request, pk):
+        item = get_object_or_404(self.get_queryset(), pk=pk)
+        item.quantity -= 1 if item.quantity > 1 else 0
+        item.save()
+        return Response(self.get_serializer(item).data)
