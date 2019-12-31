@@ -1,10 +1,8 @@
 from rest_framework import serializers
 
-from ..models import Cart
+from ..models import Cart, Item
 
-from products.serializers import ProductSerializer
-
-from .items import ItemSerializer
+from .items import ItemSerializer, ItemCreateSerializer
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -14,14 +12,10 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('items',)
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        print(representation)
-        return representation.pop('items')
-
 
 class CartItemAddSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    items = ItemCreateSerializer(many=True)
 
     class Meta:
         model = Cart
@@ -29,3 +23,11 @@ class CartItemAddSerializer(serializers.ModelSerializer):
             'user',
             'items',
         )
+
+    def create(self, validated_data):
+        items = validated_data.pop('items')
+        cart, created = Cart.objects.get_or_create(**validated_data)
+        for i in items:
+            item = Item.objects.create(**i)
+            cart.items.add(item)
+        return cart
