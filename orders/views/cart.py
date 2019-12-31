@@ -39,14 +39,16 @@ class CartViewSet(viewsets.ModelViewSet):
     def decrement(self, request, pk):
         cart = get_object_or_404(self.get_queryset(), items__pk=pk)
         item = cart.items.get(pk=pk)
-        item.quantity -= 1 if item.quantity > 1 else 0
-        item.save()
+        if item.quantity > 1:
+            item.quantity -= 1
+            item.save()
         return Response(self.get_serializer(cart).data)
 
     @action(detail=True)
     def increment(self, request, pk):
         cart = get_object_or_404(self.get_queryset(), items__pk=pk)
         item = cart.items.get(pk=pk)
-        item.quantity += 1 if item.product.stock > item.quantity + 1 else 0
-        item.save()
+        if item.product.stock >= item.quantity + 1:
+            item.quantity += 1
+            item.save()
         return Response(self.get_serializer(cart).data)
