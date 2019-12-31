@@ -42,3 +42,11 @@ class CartViewSet(viewsets.ModelViewSet):
         item.quantity -= 1 if item.quantity > 1 else 0
         item.save()
         return Response(self.get_serializer(cart).data)
+
+    @action(detail=True)
+    def increment(self, request, pk):
+        cart = get_object_or_404(self.get_queryset(), items__pk=pk)
+        item = cart.items.get(pk=pk)
+        item.quantity += 1 if item.product.stock > item.quantity + 1 else 0
+        item.save()
+        return Response(self.get_serializer(cart).data)
