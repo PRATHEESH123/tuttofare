@@ -4,17 +4,20 @@ from ..models import Cart
 
 from products.serializers import ProductSerializer
 
+from .items import ItemSerializer
+
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+    items = ItemSerializer(many=True)
 
     class Meta:
         model = Cart
-        fields = (
-            'id',
-            'product',
-            'quantity',
-        )
+        fields = ('items',)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        print(representation)
+        return representation.pop('items')
 
 
 class CartItemAddSerializer(serializers.ModelSerializer):
@@ -24,37 +27,5 @@ class CartItemAddSerializer(serializers.ModelSerializer):
         model = Cart
         fields = (
             'user',
-            'product',
-            'quantity',
+            'items',
         )
-
-    def validate(self, data):
-        """
-        Check if the quantity is greater than stock
-        """
-        user = data.get('user')
-        quantity = data.get('quantity')
-        product = data.get('product')
-
-        try:
-            Kart = product.cart.get(user=user)
-            quantity += Kart.quantity
-        except Cart.DoesNotExist:
-            pass
-
-        if quantity > product.stock:
-            raise serializers.ValidationError(f'only {product.stock - quantity} of {product.name} left in stock')
-        return data
-
-    def create(self, validated_data):
-        quantity = validated_data.pop('quantity', None)
-        instance, created = Cart.objects.get_or_create(
-            **validated_data,
-            defaults={'quantity': quantity},
-        )
-
-        if not created:
-            instance.quantity += quantity
-            instance.save()
-
-        return instance
