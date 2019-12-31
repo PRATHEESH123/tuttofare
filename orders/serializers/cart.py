@@ -12,11 +12,6 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('items',)
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        print(representation)
-        return representation.pop('items')
-
 
 class CartItemAddSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
