@@ -2,9 +2,7 @@ from rest_framework import serializers
 
 from ..models import Cart
 
-from products.serializers import ProductSerializer
-
-from .items import ItemSerializer
+from .items import ItemSerializer, ItemCreateSerializer
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -22,6 +20,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 class CartItemAddSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    items = ItemCreateSerializer(many=True)
 
     class Meta:
         model = Cart
