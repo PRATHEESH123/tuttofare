@@ -2,6 +2,7 @@ from .cart import CartItemSerializer, CartItemAddSerializer
 from .orders import OrderSerializer, OrderCreateSerializer
 from .orders import OrderSerializer
 from .items import ItemSerializer, ItemCreateSerializer
+from .address import AddressSerializer
 
 __all__ = (
     CartItemSerializer,
@@ -10,4 +11,5 @@ __all__ = (
     OrderCreateSerializer,
     ItemSerializer,
     ItemCreateSerializer,
+    AddressSerializer,
 )
