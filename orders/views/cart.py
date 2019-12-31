@@ -6,27 +6,49 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from ..models import Item
-from ..serializers import ItemSerializer, ItemCreateSerializer
+from ..models import Cart
+from ..serializers import CartItemAddSerializer, CartItemSerializer
 
 
 class CartViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
+    queryset = Cart.objects.all()
+    serializer_class = CartItemSerializer
 
     def get_queryset(self):
         if self.action == 'list':
-            return Item.objects.filter(cart__user=self.request.user)
+            return Cart.objects.filter(user=self.request.user)
         return super().get_queryset()
 
     def get_serializer_class(self):
         if self.action == 'create':
-            return ItemCreateSerializer
+            return CartItemAddSerializer
         return super().get_serializer_class()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data[0]['items'])
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @action(detail=True)
     def decrement(self, request, pk):
-        item = get_object_or_404(self.get_queryset(), pk=pk)
-        item.quantity -= 1 if item.quantity > 1 else 0
-        item.save()
-        return Response(self.get_serializer(item).data)
+        cart = get_object_or_404(self.get_queryset(), items__pk=pk)
+        item = cart.items.get(pk=pk)
+        if item.quantity > 1:
+            item.quantity -= 1
+            item.save()
+        return Response(self.get_serializer(cart).data)
+
+    @action(detail=True)
+    def increment(self, request, pk):
+        cart = get_object_or_404(self.get_queryset(), items__pk=pk)
+        item = cart.items.get(pk=pk)
+        if item.product.stock >= item.quantity + 1:
+            item.quantity += 1
+            item.save()
+        return Response(self.get_serializer(cart).data)

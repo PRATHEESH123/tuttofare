@@ -10,4 +10,4 @@ class Cart(models.Model):
 
     def __str__(self):
         """Unicode representation of Item."""
-        return f'<{self.items}: {self.items}>'
+        return f'<{self.user}>'
