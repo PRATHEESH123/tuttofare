@@ -21,11 +21,16 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             'shipping_address',
         )
 
+    def validate(self, attrs):
+        for item in attrs['items']:
+            if item['product'].stock < item['quantity']:
+                raise serializers.ValidationError(f'we dont have that much of {item["product"]} in stock')
+        return attrs
+
     def create(self, validated_data):
         items = validated_data.pop('items')
         order = Order.objects.create(**validated_data)
         for i in items:
-            print(i)
             item = Item.objects.create(**i)
             order.items.add(item)
         return order
