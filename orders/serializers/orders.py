@@ -32,6 +32,9 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         order = Order.objects.create(**validated_data)
         for i in items:
             item = Item.objects.create(**i)
+            if item.product.stock - item.quantity > 0:
+                item.product.stock -= item.quantity
+            item.product.save()
             order.items.add(item)
         return order
 
