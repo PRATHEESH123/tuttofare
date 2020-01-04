@@ -1,5 +1,7 @@
+import re
+
 from django.http import HttpRequest, HttpResponse
-from googletrans import Translator, LANGUAGES
+from googletrans import Translator
 
 
 class TranslationMiddleware:
@@ -12,10 +14,16 @@ class TranslationMiddleware:
     def __call__(self, request: HttpRequest):
 
         response = self.get_response(request)
-        response_text = response.content.decode("utf-8")
-        # print(response_text)
+        response_text: str = response.content.decode("utf-8")
 
-        print(self.translate('hello').text)
+        found = re.findall(
+            r'"name": *"(?P<value>[a-zA-Z0-9 ]*)",?',
+            response_text,
+        )
+        for i in found:
+            j = self.translate(i)
+            print(i, j.text)
+            response_text = response_text.replace(i, j.text)
 
         response.content = response_text.encode('utf-8')
         return response
