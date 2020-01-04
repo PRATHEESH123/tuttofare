@@ -3,7 +3,7 @@ import re
 from functools import lru_cache
 
 from django.http import HttpRequest, HttpResponse
-from googletrans import Translator
+from googletrans import Translator, LANGUAGES
 
 
 class TranslationMiddleware:
@@ -16,11 +16,12 @@ class TranslationMiddleware:
 
     def __call__(self, request: HttpRequest):
 
-        self.lang = request.GET.get('lang')
+        lang = request.GET.get('lang')
+        self.lang = lang if lang in LANGUAGES else 'en'
 
         response = self.get_response(request)
 
-        if self.lang and self.lang != 'en':
+        if self.lang != 'en':
             content = response.content.decode("utf-8")
             content = self.pattern.sub(self.translation, content)
             response.content = content.encode('utf-8')
