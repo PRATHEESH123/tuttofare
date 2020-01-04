@@ -24,6 +24,7 @@ django-s3-storage = "*"
 django-username-email = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
+googletrans = "*"
 
 [requires]
 python_version = "3.7"
