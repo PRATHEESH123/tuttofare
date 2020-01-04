@@ -17,7 +17,7 @@ class TranslationMiddleware:
         response_text: str = response.content.decode("utf-8")
 
         found = re.findall(
-            r'"name": *"(?P<value>[a-zA-Z0-9 ]*)",?',
+            r': *"(?P<value>[a-zA-Z0-9 ]*)",?',
             response_text,
         )
         for i in found:
