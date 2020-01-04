@@ -13,20 +13,24 @@ class TranslationMiddleware:
 
     def __call__(self, request: HttpRequest):
 
+        self.lang = request.GET.get('lang')
+
         response = self.get_response(request)
-        response_text: str = response.content.decode("utf-8")
 
-        found = re.findall(
-            r': *"(?P<value>[a-zA-Z0-9 ]*)",?',
-            response_text,
-        )
-        for i in found:
-            j = self.translate(i)
-            print(i, j.text)
-            response_text = response_text.replace(i, j.text)
+        if self.lang and self.lang != 'en':
+            response_text: str = response.content.decode("utf-8")
 
-        response.content = response_text.encode('utf-8')
+            found = re.findall(
+                r': *"(?P<value>[a-zA-Z0-9 ]*)",?',
+                response_text,
+            )
+            for i in found:
+                j = self.translate(i)
+                print(i, j.text)
+                response_text = response_text.replace(i, j.text)
+
+            response.content = response_text.encode('utf-8')
         return response
 
     def translate(self, text):
-        return self.translator.translate(text, dest='ar')
+        return self.translator.translate(text, dest=self.lang, src='en')
