@@ -9,7 +9,7 @@ class TranslationMiddleware:
     def __init__(self, get_response: HttpResponse):
         self.get_response = get_response
         self.translator = Translator()
-        self.pattern = re.compile(r': *"(?P<value>[\w\s]*)",?')
+        self.pattern = re.compile(r'(?P<start>: *")(?P<value>[\w\s]*)(?P<end>",?)')
         # One-time configuration and initialization.
 
     def __call__(self, request: HttpRequest):
@@ -21,11 +21,11 @@ class TranslationMiddleware:
         if self.lang and self.lang != 'en':
             response_text: str = response.content.decode("utf-8")
 
-            found = self.pattern.findall(response_text)
-            for i in found:
-                j = self.translate(i)
-                print(i, j.text)
-                response_text = response_text.replace(i, j.text)
+            def func(matchobj):
+                lang = self.translate(matchobj.group('value'))
+                return ''.join((matchobj.group('start'), lang.text, matchobj.group('end')))
+
+            response_text = self.pattern.sub(func, response_text)
 
             response.content = response_text.encode('utf-8')
         return response
