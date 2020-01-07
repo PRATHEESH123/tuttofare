@@ -31,6 +31,7 @@ from products.views import (
     ProductReviewViewSet,
     CollectionViewSet,
     WishlistProductsViewSet,
+    BrandViewSet,
 )
 
 from banners.views import BannerViewSet
@@ -42,6 +43,7 @@ router.register('categories', CategoryViewSet)
 router.register('products', ProductViewSet)
 router.register('review', ProductReviewViewSet)
 router.register('collections', CollectionViewSet)
+router.register('brands', BrandViewSet)
 router.register('wishlist', WishlistProductsViewSet, basename='wishlist')
 router.register('cart', CartViewSet, basename='cart')
 router.register('banners', BannerViewSet)
