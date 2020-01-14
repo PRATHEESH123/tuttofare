@@ -39,8 +39,6 @@ class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
             'stock',
             'category',
             'images',
-        )
-        detail_fields = (
-            'descrption',
             'no_of_reviews',
         )
+        detail_fields = ('descrption',)
