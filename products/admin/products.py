@@ -24,7 +24,7 @@ class ProductReviewInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     '''Admin View for Product'''
 
-    list_display = ('name', 'price', 'average_rating')
+    list_display = ('name', 'price', 'stock', 'average_rating')
     list_filter = (('category', TreeRelatedFieldListFilter),)
     inlines = [
         ProductImageInline,
