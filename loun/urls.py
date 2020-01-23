@@ -59,6 +59,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/', include('djoser.urls.authtoken')),
     path('api/', include('rest_framework.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

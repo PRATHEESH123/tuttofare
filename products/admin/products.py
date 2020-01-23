@@ -6,6 +6,9 @@ from mptt.admin import TreeRelatedFieldListFilter
 # tranlations
 from modeltranslation.admin import TranslationAdmin
 
+# summernote (rich text field)
+from django_summernote.admin import SummernoteModelAdmin
+
 # local
 from ..models import Product, ProductImage, ProductReview
 
@@ -21,7 +24,7 @@ class ProductReviewInline(admin.TabularInline):
 
 
 @admin.register(Product)
-class ProductAdmin(TranslationAdmin):
+class ProductAdmin(SummernoteModelAdmin, TranslationAdmin):
     '''Admin View for Product'''
 
     list_display = ('name', 'price', 'stock', 'average_rating')
@@ -30,3 +33,4 @@ class ProductAdmin(TranslationAdmin):
         ProductImageInline,
         ProductReviewInline,
     ]
+    summernote_fields = ('descrption',)
