@@ -26,6 +26,7 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 googletrans = "*"
 django-modeltranslation = "*"
+django-summernote = "*"
 
 [requires]
 python_version = "3.7"
