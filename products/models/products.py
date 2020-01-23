@@ -10,6 +10,7 @@ class Product(models.Model):
     stock = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     varaint_of = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    false_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         """Unicode representation of Product."""
