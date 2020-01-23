@@ -40,5 +40,6 @@ class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
             'category',
             'images',
             'no_of_reviews',
+            'false_price',
         )
         detail_fields = ('descrption',)
