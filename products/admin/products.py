@@ -1,7 +1,10 @@
 from django.contrib import admin
 
-# 3rd party
+# MPTT
 from mptt.admin import TreeRelatedFieldListFilter
+
+# tranlations
+from modeltranslation.admin import TranslationAdmin
 
 # local
 from ..models import Product, ProductImage, ProductReview
@@ -9,10 +12,7 @@ from ..models import Product, ProductImage, ProductReview
 
 class ProductImageInline(admin.StackedInline):
     model = ProductImage
-    extra = 0
-    # verbose_name = 'sub category'
-    # verbose_name_plural = 'sub categories'
-    show_change_link = True
+    extra = 1
 
 
 class ProductReviewInline(admin.TabularInline):
@@ -21,7 +21,7 @@ class ProductReviewInline(admin.TabularInline):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TranslationAdmin):
     '''Admin View for Product'''
 
     list_display = ('name', 'price', 'stock', 'average_rating')

@@ -73,6 +73,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #  need to be above admin for it to work in admin panel
+    'modeltranslation',
+
+    # django defaults
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -212,7 +216,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = False
+USE_I18N = True
 
 USE_L10N = False
 
@@ -237,6 +241,11 @@ AWS_S3_ADDRESSING_STYLE = "virtual"
 
 DEFAULT_FILE_STORAGE = env('DEFAULT_FILE_STORAGE')
 STATICFILES_STORAGE = env('STATICFILES_STORAGE')
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('ar', 'Arabic'),
+)
 
 import django_heroku
 django_heroku.settings(locals())

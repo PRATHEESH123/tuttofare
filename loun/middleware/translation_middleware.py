@@ -1,40 +1,21 @@
-import re
+# Used for typing
+from django.http import HttpRequest
+from rest_framework.response import Response
 
-from functools import lru_cache
-
-from django.http import HttpRequest, HttpResponse
-from googletrans import Translator, LANGUAGES
+from django.utils import translation
 
 
 class TranslationMiddleware:
 
-    def __init__(self, get_response: HttpResponse):
+    def __init__(self, get_response: Response):
         self.get_response = get_response
-        self.translator = Translator()
-        self.pattern = re.compile(r'(?P<start>: *")(?P<value>[\w\s]*)(?P<end>",?)')
-        # One-time configuration and initialization.
 
     def __call__(self, request: HttpRequest):
+        lang = request.GET.get('lang', 'en')
+        lang = request.headers.get('lang', lang)
 
-        lang = request.GET.get('lang')
-        self.lang = lang if lang in LANGUAGES else 'en'
+        translation.activate(lang)
 
         response = self.get_response(request)
 
-        if self.lang != 'en':
-            content = response.content.decode("utf-8")
-            content = self.pattern.sub(self.translation, content)
-            response.content = content.encode('utf-8')
-
         return response
-
-    @lru_cache(maxsize=None)
-    def cache_translation(self, text, dest):
-        """ a seprate function is used to translate the match, in order
-            to have differnet cache for each of the languages
-        """
-        return self.translator.translate(text, dest=dest, src='en')
-
-    def translation(self, match):
-        lang = self.cache_translation(match.group('value'), self.lang)
-        return ''.join((match.group('start'), lang.text, match.group('end')))
