@@ -4,6 +4,7 @@ from .products import ProductViewSet
 from .reviews import ProductReviewViewSet
 from .wishlist import WishlistProductsViewSet
 from .brands import BrandViewSet
+from .tags import TagViewSet
 
 __all__ = (
     CategoryViewSet,
@@ -12,4 +13,5 @@ __all__ = (
     ProductReviewViewSet,
     WishlistProductsViewSet,
     BrandViewSet,
+    TagViewSet,
 )

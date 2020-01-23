@@ -32,6 +32,7 @@ from products.views import (
     CollectionViewSet,
     WishlistProductsViewSet,
     BrandViewSet,
+    TagViewSet,
 )
 
 from banners.views import BannerViewSet
@@ -42,6 +43,7 @@ router = DefaultRouter()
 router.register('categories', CategoryViewSet)
 router.register('products', ProductViewSet)
 router.register('review', ProductReviewViewSet)
+router.register('tags', TagViewSet)
 router.register('collections', CollectionViewSet)
 router.register('brands', BrandViewSet)
 router.register('wishlist', WishlistProductsViewSet, basename='wishlist')

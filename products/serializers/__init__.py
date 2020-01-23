@@ -3,6 +3,7 @@ from .collections import CollectionsSerializer
 from .products import ProductSerializer
 from .reviews import ProductReviewSerializer
 from .brands import BrandSerializer
+from .tags import TagSerializer
 
 __all__ = (
     CategorySerializer,
@@ -10,4 +11,5 @@ __all__ = (
     ProductSerializer,
     ProductReviewSerializer,
     BrandSerializer,
+    TagSerializer,
 )

@@ -5,6 +5,7 @@ from .products import Product
 from .reviews import ProductReview
 from .wishlist import Wishlist
 from .brands import Brand
+from .tags import Tag
 
 __all__ = (
     Category,
@@ -14,4 +15,5 @@ __all__ = (
     ProductReview,
     Wishlist,
     Brand,
+    Tag,
 )
