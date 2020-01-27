@@ -2,8 +2,8 @@ from django.contrib import admin
 
 # 3rd party
 from mptt.admin import DraggableMPTTAdmin
-from modeltranslation.admin import TranslationAdmin
-from modeltranslation.admin import TranslationTabularInline
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
+
 # local
 from ..models import Category
 
