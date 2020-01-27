@@ -5,6 +5,7 @@ class Product(models.Model):
     """Model definition for Product."""
 
     name = models.CharField('product name', max_length=50)
+    sku=models.CharField('Sku Key', max_length=50, blank=True, unique=True)
     descrption = models.TextField(default='')
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
     stock = models.PositiveIntegerField(default=0)
