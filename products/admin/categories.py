@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # 3rd party
 from mptt.admin import DraggableMPTTAdmin
+from modeltranslation.admin import TranslationAdmin
 
 # local
 from ..models import Category
@@ -16,7 +17,7 @@ class SubCategoryInline(admin.StackedInline):
 
 
 @admin.register(Category)
-class CategoryAdmin(DraggableMPTTAdmin):
+class CategoryAdmin(DraggableMPTTAdmin, TranslationAdmin):
     '''Admin View for Category'''
     list_display = (
         'tree_actions',
