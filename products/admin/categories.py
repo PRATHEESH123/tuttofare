@@ -3,12 +3,12 @@ from django.contrib import admin
 # 3rd party
 from mptt.admin import DraggableMPTTAdmin
 from modeltranslation.admin import TranslationAdmin
-
+from modeltranslation.admin import TranslationTabularInline
 # local
 from ..models import Category
 
 
-class SubCategoryInline(admin.StackedInline):
+class SubCategoryInline(TranslationTabularInline):
     model = Category
     extra = 0
     verbose_name = 'sub category'
