@@ -42,4 +42,7 @@ class ProductSerializer(DynamicSerializerMixin, serializers.ModelSerializer):
             'no_of_reviews',
             'false_price',
         )
-        detail_fields = ('descrption',)
+        detail_fields = (
+            'descrption',
+            'tags',
+        )
