@@ -10,7 +10,7 @@ from modeltranslation.admin import TranslationAdmin
 from django_summernote.admin import SummernoteModelAdmin
 
 # local
-from ..models import Product, ProductImage, ProductReview, Brand
+from ..models import Product, ProductImage, ProductReview, Brand , Tag
 
 
 class ProductImageInline(admin.StackedInline):
@@ -31,6 +31,13 @@ class BrandInline(admin.TabularInline):
     verbose_name_plural = 'Brands'
     extra = 0
 
+class TagInline(admin.TabularInline):
+    '''Tabular Inline View for Tag'''
+
+    model = Tag.products.through
+    verbose_name= 'Tag'
+    verbose_name_plural= 'Tags'
+    extra = 0 
 
 @admin.register(Product)
 class ProductAdmin(SummernoteModelAdmin, TranslationAdmin):
@@ -42,5 +49,6 @@ class ProductAdmin(SummernoteModelAdmin, TranslationAdmin):
         ProductImageInline,
         ProductReviewInline,
         BrandInline,
+        TagInline,
     ]
     summernote_fields = ('descrption',)
