@@ -10,7 +10,6 @@ from ..models import Category
 
 class CategorySerializer(serializers.ModelSerializer):
     children = RecursiveField(required=False, allow_null=True, many=True)
-    no_of_product = serializers.IntegerField(source='product_set.count')
 
     class Meta:
         model = Category

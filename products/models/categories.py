@@ -35,3 +35,9 @@ class Category(MPTTModel):
     def __str__(self):
         """Unicode representation of Category."""
         return f'{self.name}'  # TODO
+
+    def no_of_product(self):
+        sum = 0
+        for i in self.get_descendants():
+            sum = sum + i.product_set.count()
+        return sum
