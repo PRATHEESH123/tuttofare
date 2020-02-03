@@ -3,8 +3,8 @@ from django.contrib import admin
 # MPTT
 from mptt.admin import TreeRelatedFieldListFilter
 
-# tranlations
-from modeltranslation.admin import TranslationAdmin
+# # tranlations
+# from modeltranslation.admin import TranslationAdmin
 
 # summernote (rich text field)
 from django_summernote.admin import SummernoteModelAdmin
@@ -12,10 +12,12 @@ from django_summernote.admin import SummernoteModelAdmin
 # local
 from ..models import Product, ProductImage, ProductReview, Brand , Tag
 
-
 class ProductImageInline(admin.StackedInline):
     model = ProductImage
-    extra = 1
+    extra = 0
+    # verbose_name = 'sub category'
+    # verbose_name_plural = 'sub categories'
+    show_change_link = True
 
 
 class ProductReviewInline(admin.TabularInline):
@@ -23,13 +25,16 @@ class ProductReviewInline(admin.TabularInline):
     extra = 1
 
 
-class BrandInline(admin.TabularInline):
-    '''Tabular Inline View for Brand'''
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    '''Admin View for Product'''
 
-    model = Brand.products.through
-    verbose_name = 'Brand'
-    verbose_name_plural = 'Brands'
-    extra = 0
+    list_display = ('name', 'price', 'stock', 'average_rating')
+    list_filter = (('category', TreeRelatedFieldListFilter),)
+    inlines = [
+        ProductImageInline,
+        ProductReviewInline,
+    ] 
 
 class TagInline(admin.TabularInline):
     '''Tabular Inline View for Tag'''
@@ -39,16 +44,4 @@ class TagInline(admin.TabularInline):
     verbose_name_plural= 'Tags'
     extra = 0 
 
-@admin.register(Product)
-class ProductAdmin(SummernoteModelAdmin, TranslationAdmin):
-    '''Admin View for Product'''
 
-    list_display = ('name', 'price', 'stock', 'average_rating')
-    list_filter = (('category', TreeRelatedFieldListFilter),)
-    inlines = [
-        ProductImageInline,
-        ProductReviewInline,
-        BrandInline,
-        TagInline,
-    ]
-    summernote_fields = ('descrption',)

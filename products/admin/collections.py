@@ -1,8 +1,5 @@
 from django.contrib import admin
 
-# tranlations
-from modeltranslation.admin import TranslationAdmin
-
 # local
 from ..models import Collection, CollectionImage
 
@@ -13,7 +10,7 @@ class ImageInline(admin.TabularInline):
 
 
 @admin.register(Collection)
-class CollectionAdmin(TranslationAdmin):
+class CollectionAdmin(admin.ModelAdmin):
     '''Admin View for Collection'''
 
     list_display = ('name',)

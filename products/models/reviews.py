@@ -11,6 +11,9 @@ class ProductReview(models.Model):
     rating = models.PositiveIntegerField()
     posted_on = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        unique_together = ('user','product',)
+
     def __str__(self):
         """Unicode representation of ProductReview."""
         return f'{self.user}: {self.text}'

@@ -1,1 +1,1 @@
-web: gunicorn loun.wsgi --log-file -
+web: gunicorn tuttofare.wsgi --log-file -

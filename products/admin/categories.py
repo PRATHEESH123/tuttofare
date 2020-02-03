@@ -2,13 +2,13 @@ from django.contrib import admin
 
 # 3rd party
 from mptt.admin import DraggableMPTTAdmin
-from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
+
 
 # local
 from ..models import Category
 
 
-class SubCategoryInline(TranslationTabularInline):
+class SubCategoryInline(admin.StackedInline):
     model = Category
     extra = 0
     verbose_name = 'sub category'
@@ -17,7 +17,7 @@ class SubCategoryInline(TranslationTabularInline):
 
 
 @admin.register(Category)
-class CategoryAdmin(DraggableMPTTAdmin, TranslationAdmin):
+class CategoryAdmin(DraggableMPTTAdmin):
     '''Admin View for Category'''
     list_display = (
         'tree_actions',
